@@ -2,6 +2,12 @@ const router = require('express').Router();
 
 const projectDB = require('../data/helpers/projectModel');
 
+router.get('/', (req, res) => {
+    projectDB.getList()
+        .then(projects => res.status(200).json(projects))
+        .catch(err => {console.log(err); res.status(500).json({ error: 'There was an error retrieving a list of projects' })})
+})
+
 router.get('/:id', (req, res) => {
     projectDB.get(req.params.id)
     .then(project => res.status(200).json(project))
